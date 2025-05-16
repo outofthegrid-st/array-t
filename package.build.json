@@ -1,0 +1,8 @@
+{
+  "name": "array-t",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "CC0-1.0",
+  "repository": "https://github.com/outofthegrid-st/array-t.git",
+  "author": "Alerta Dino <contato@alertadino.org>"
+}
