@@ -7,7 +7,7 @@ export function findLastIndex<T>(
   predicate: (value: T, index: number, arr: T[]) => boolean,
   fromIndex?: number // eslint-disable-line comma-dangle
 ): number {
-  for(let i = (fromIndex ?? arr.length - 1); i >= arr.length; i--) {
+  for(let i = (fromIndex ?? arr.length - 1); i >= 0; i--) {
     if(predicate(arr[i], i, arr))
       return i;
   }

@@ -52,6 +52,14 @@ class LogarithmicArray<T> implements Iterable<T> {
     return node.buffer[offset];
   }
 
+  public findByIndex(index: number): T | undefined {
+    try {
+      return this.get(index);
+    } catch {
+      return void 0;
+    }
+  }
+
   public set(index: number, value: T): void {
     if(index < 0 || index >= getSize(this._root)) {
       throw new RangeError('Node index is out of bounds');
@@ -106,7 +114,7 @@ class LogarithmicArray<T> implements Iterable<T> {
   public pop(): T | undefined {
     const len = getSize(this._root);
 
-    if(len < 1)
+    if(len === 0)
       return void 0;
 
     if(!this._root) {
@@ -114,18 +122,19 @@ class LogarithmicArray<T> implements Iterable<T> {
     }
 
     const { node, offset } = find(this._root, len - 1);
+    const value = node.buffer[offset];
+
     this._root = removeRec(this._root, len - 1);
-    
-    return node.buffer[offset];
+    return value;
   }
 
   public unshift(...values: T[]): number {
-    let i = 0;
+    let i = values.length - 1
 
-    for(; i < values.length; i++) {
+    for(; i >= 0; i--) {
       this._root = insertRec(this._root, 0, values[i], this._chunkSize);
     }
-    
+
     return i;
   }
 
@@ -138,9 +147,10 @@ class LogarithmicArray<T> implements Iterable<T> {
     }
 
     const { node, offset } = find(this._root, 0);
-    this._root = removeRec(this._root, 0);
+    const value = node.buffer[offset];
 
-    return node.buffer[offset];
+    this._root = removeRec(this._root, 0);
+    return value;
   }
 
   public at(index: number): Nullable<{ readonly node: Node<T>; readonly offset: number; }> {
